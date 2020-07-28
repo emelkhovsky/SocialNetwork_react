@@ -1,17 +1,27 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header'
-import Nav from './components/Nav'
-import Profile from './components/Profile'
+import Dialogs from './components/Dialogs/Dialogs'
+import Nav from './components/Nav/Nav'
+import Profile from './components/Profile/Profile'
+import Header from './components/Header/Header'
+import List from './components/Dialogs/List/List'
+import Post from "./components/Profile/Posts/Post/Post";
+import {Route, BrowserRouter} from 'react-router-dom'
 
 
-const App = () => {
+const App = (props) => {
   return (
-    <div className="app-wrapper">
-        <Header />
-        <Nav />
-        <Profile />
-    </div>
+      <BrowserRouter>
+          <div className="app-wrapper">
+              <Header/>
+              <Nav/>
+              <div className="app-wrapper-content">
+                  <Route exact path="/profile" render={() => <Profile name="Kate" surname="Meow" age="20" sex="women" city="Moscow" profile={props.state.profile} /> } />
+                  <Route path="/dialogs" render={() => <Dialogs dialog={props.state.dialog}/>}/>
+              </div>
+
+          </div>
+      </BrowserRouter>
   );
 }
 

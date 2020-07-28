@@ -1,0 +1,14 @@
+.dialogs{
+    color:white;
+    display:grid;
+    width: 700px;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+            "i d";
+}
+.dialog_items{
+    grid-area: i;
+}
+.dialog{
+    grid-area: d;
+}
