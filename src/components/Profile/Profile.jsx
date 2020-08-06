@@ -7,7 +7,7 @@ const Profile = (props) => {
     return (
         <div className={s.profile}>
             <AvaInfo name={props.name} surname={props.surname} age={props.age} sex={props.sex} city={props.city} />
-            <Posts posts={props.profile.posts} addPost={props.addPost} newposttext={props.profile.newposttext} updateNewPostText={props.updateNewPostText}/>
+            <Posts profile={props.store.getState().profile} dispatch={props.dispatch}/>
         </div>
     );
 }

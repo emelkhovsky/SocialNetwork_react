@@ -1,6 +1,6 @@
-let rerenderEntireTree = () =>{
+import { profileReducer } from "./profileReducer";
+import { dialogReducer } from "./dialogReducer";
 
-};
 
 let dialog_list = [
     {name:'Vlad', messages:['hello', 'hello!','you are a cat!']},
@@ -14,33 +14,33 @@ let posts = [
     {post:'My first post, hello everybody!', likes:5}
 ];
 
-let state = {
-    dialog: {
-        dialog_list:dialog_list
+let store = {
+    _state:{
+        dialog: {
+            dialog_list:dialog_list,
+            newmessagetext:'new massage'
+        },
+        profile: {
+            posts: posts,
+            newposttext:'text'
+        }
     },
-    profile: {
-        posts: posts,
-        newposttext:'text'
+    _rerenderEntireTree(){
+        console.log('state changed');
+    },
+    subscribe(observer){
+        this._rerenderEntireTree = observer;
+    },
+    getState(){
+        return this._state;
+    },
+    dispatch(action){
+        this._state.profile = profileReducer(this.getState().profile, action);
+        this._state.dialog = dialogReducer(this.getState().dialog, action);
+        this._rerenderEntireTree();
     }
 };
 
-export const addPost = () =>{
-    let newpost = {
-        post:state.profile.newposttext,
-        likes:11
-    }
-    state.profile.posts.push(newpost);
-    state.profile.newposttext = '';
-    rerenderEntireTree(state);
-};
 
-export const updateNewPostText = (post) =>{
-    state.profile.newposttext = post;
-    rerenderEntireTree(state);
-};
-
-export const subscribe = (observer) =>{
-    rerenderEntireTree = observer;
-};
-
-export default state;
+export default store;
+window.store = store;
