@@ -13,12 +13,22 @@ let initialState = {
 
 
 export const dialogReducer = (state=initialState, action) =>{
+    let stateCopy;
     if (action.type === ADD_MESSAGE){
-        state.dialog_list[0].messages.push(state.newmessagetext);
-        state.newmessagetext = '';
+        stateCopy = {
+            ...state,
+            dialog_list:[...state.dialog_list], 
+            newmessagetext: ''
+        };
+        stateCopy.dialog_list[0].messages = [...state.dialog_list[0].messages]
+        stateCopy.dialog_list[0].messages.push(state.newmessagetext);
+        return stateCopy;
     }
     else if (action.type === UPDATE_NEW_MESSAGE_TEXT){
-        state.newmessagetext = action.text;
+        return {
+            ...state,
+            newmessagetext:action.text
+        };
     }
     return state;
 };

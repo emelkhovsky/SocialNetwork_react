@@ -12,12 +12,10 @@ const AvaInfo = (props) => {
             </div>
             <div className={s.info}>
                 <div className={s.name}>
-                    {props.name} {props.surname}
+
                 </div>
                 <div className={s.info}>
-                    <div>age: {props.age}</div>
-                    <div>sex: {props.sex}</div>
-                    <div>city: {props.city}</div>
+
                 </div>
             </div>
         </div>

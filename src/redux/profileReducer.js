@@ -19,11 +19,17 @@ export const profileReducer = (state=initialState, action) =>{
             post:state.newposttext,
             likes:11
         }
-        state.posts.push(newpost);
-        state.newposttext = 'dsd';
+        return {
+            ...state,
+            posts:[...state.posts, newpost],
+            newposttext:''
+        };
     }
     else if (action.type === UPDATE_NEW_POST_TEXT){
-        state.newposttext = action.text;
+        return {
+            ...state,
+            newposttext:action.text
+        };
     }
     return state;
 };
