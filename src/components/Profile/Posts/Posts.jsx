@@ -1,6 +1,13 @@
 import React from "react";
 import s from './Posts.module.css'
+import Post from "./Post/Post";
+import Preloader from './../../Preloader/Preloader'
+
 const Posts = (props) => {
+    
+    if (!props.profile){
+        return <Preloader />
+    }
     let newPostElement = React.createRef();
     let addPost = () => {
         props.addPostContainer();
@@ -9,6 +16,7 @@ const Posts = (props) => {
         let text = event.target.value;
         props.onPostChangeContainer(text);
     };
+    let new_posts = props.posts.map(el => (<Post post={el.post} likes={el.likes}/>));
     return (
         <div>
             <div>My posts</div>
@@ -17,7 +25,7 @@ const Posts = (props) => {
                 <button onClick={addPost} >Add post</button>
             </div>
             <div className={s.posts}>
-                {props.new_posts}
+                {new_posts}
             </div>
         </div>
      );

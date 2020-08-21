@@ -3,6 +3,7 @@ const REMOVE_FRIEND = 'REMOVE-FRIEND';
 const SET_USERS = 'SET-USERS';
 const CHANGE_PAGE = 'CHANGE_PAGE';
 const SET_USERS_COUNT = 'SET_USERS_COUNT';
+const LOADING = 'LOADING';
 
 let users = []
 
@@ -10,7 +11,8 @@ let initialState = {
     users,
     pageSize: 5, 
     usersCount: 0,
-    currentPage: 1
+    currentPage: 1,
+    isLoading: false
 }
 
 export const usersReducer = (state=initialState, action) =>{
@@ -64,40 +66,53 @@ export const usersReducer = (state=initialState, action) =>{
             usersCount:count
         };
     }
+    else if(action.type === LOADING){
+        return{
+            ...state,
+            isLoading:action.isLoading
+        };
+    }
     return state;
 }
 
-export const addAC = (id) => {
+export const add_user = (id) => {
     return{
         type: ADD_FRIEND,
         id
     };
 };
 
-export const removeAC = (id) =>{
+export const remove_user = (id) =>{
     return {
         type: REMOVE_FRIEND,
         id
     }
 };
 
-export const setUsersAC = (users) =>{
+export const set_users = (users) =>{
     return{
         type: SET_USERS,
         users
     }
 }
 
-export const changePageAC = (pageNumber) =>{
+export const change_page = (pageNumber) =>{
     return{
         type: CHANGE_PAGE,
         pageNumber
     }
 }
 
-export const setUsersCountAC = (count) =>{
+export const set_users_count = (count) =>{
     return{
         type: SET_USERS_COUNT,
         count
+    }
+}
+
+export const is_loading = (isLoading) =>{
+    return{
+        type: LOADING,
+        isLoading
     }
 }

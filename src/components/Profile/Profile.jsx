@@ -6,7 +6,7 @@ import AvaInfo from "./AvaInfo/AvaInfo";
 const Profile = (props) => {
     return (
         <div className={s.profile}>
-            <AvaInfo/>
+            <AvaInfo profile={props.profile}/>
             <PostsContainer/>
         </div>
     );
