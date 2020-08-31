@@ -1,21 +1,19 @@
 import React from "react";
-import {connect} from 'react-redux'
-import {add_user, remove_user, set_users, change_page, set_users_count, is_loading} from './.././../redux/usersReducer'
+import {connect} from 'react-redux';
+import {add_user, remove_user, set_users, change_page, set_users_count, is_loading} from './.././../redux/usersReducer';
 import * as axios from "axios";
-import Users from './Users'
-import Preloader from './../Preloader/Preloader'
+import Users from './Users';
+import Preloader from './../Preloader/Preloader';
+import {usersAPI} from './../../api/api'
 
 
 class UsersClassComponent extends React.Component {
 
     componentDidMount(){
         this.props.is_loading(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials:true,
-        })
-        .then(response => {
-            this.props.set_users(response.data.items);     
-            this.props.set_users_count(response.data.totalCount);
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+            this.props.set_users(data.items);     
+            this.props.set_users_count(data.totalCount);
             this.props.is_loading(false);
         });
         
@@ -24,11 +22,8 @@ class UsersClassComponent extends React.Component {
     change_page = (pageNumber) =>{
         this.props.change_page(pageNumber);
         this.props.is_loading(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`, {
-            withCredentials:true,
-        })
-        .then(response => {
-            this.props.set_users(response.data.items); 
+        usersAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
+            this.props.set_users(data.items); 
             this.props.is_loading(false);    
         });
     }
@@ -59,4 +54,4 @@ const mapStateToProps = (state) =>{
     }
 }
 
-export default connect(mapStateToProps, {add_user, remove_user, set_users, change_page, set_users_count, is_loading})(UsersClassComponent);
+export default connect(mapStateToProps, {add_user, remove_user, set_users, change_page, set_users_count, is_loading, unfollow: usersAPI.unfollow, follow: usersAPI.follow})(UsersClassComponent);
